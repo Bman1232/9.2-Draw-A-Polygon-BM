@@ -21,6 +21,7 @@ while True:
         regular_polygon(pen, sides)
     elif sides < 3:
         print("A polygon cannot have less than 3 sides, try again.")
+    elif sides == 4:
         
 
 screen.exitonclick()
