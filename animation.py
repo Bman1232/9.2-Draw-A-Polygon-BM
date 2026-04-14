@@ -17,17 +17,19 @@ def playing_area():
         t.right(90)
     t.end_fill()
     
-def move_forward(turtle):
+def move_forward(turtle, turtles):
     turtle.forward(5)
-
     if turtle.xcor() > 220 or turtle.xcor() < -225:
         turtle.speed(0)
         turtle.setheading(180 - turtle.heading())
         turtle.speed(5)
+        turtles.append(create_turtle())
     if turtle.ycor() > 225 or turtle.ycor() < -225:
         turtle.speed(0)
         turtle.setheading(-turtle.heading())
-    turtle.speed(5)
+        turtle.speed(5)
+        turtles.append(create_turtle())
+    return turtles
 
 def move_xy(turtle, deltaX, deltaY):
     newX = turtle.xcor() + deltaX
@@ -41,6 +43,15 @@ def move_xy(turtle, deltaX, deltaY):
         newY = turtle.ycor()
     turtle.goto(newX, newY)
     return deltaX, deltaY
+
+def create_turtle():
+    shape1 = Turtle()
+    shape1.speed(0)
+    shape1.color(generate_color())
+    shape1.shape("circle")
+    shape1.seth(random.randint(0,360))
+    return shape1
+#Setup
 screen = Screen()
 screen.bgcolor("white")
 screen.setup(500,500)
@@ -48,12 +59,13 @@ shape = Turtle()
 shape.shape("circle")
 shape.color(generate_color())
 shape.speed(10)
-deltaX = random.randint(-5,5)
-deltaY = random.randint(-5,5)
+turtles = [shape]
 
 playing_area()
 
 while True:
-    deltaX, deltaY = move_xy(shape, deltaX, deltaY)
+    for obj in turtles:
+        turtles = move_forward(obj, turtles)
+    print(turtles)
 
 screen.exitonclick()

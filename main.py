@@ -22,6 +22,8 @@ while True:
     elif sides < 3:
         print("A polygon cannot have less than 3 sides, try again.")
     elif sides == 4:
-        
+        num_paralell = int(input("How many paralell sides are there: "))
+        if num_paralell == 0:
+            pass
 
 screen.exitonclick()
