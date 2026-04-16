@@ -51,21 +51,53 @@ def create_turtle():
     shape1.shape("circle")
     shape1.seth(random.randint(0,360))
     return shape1
+
+
+def create_player():
+    global player
+    player = Turtle()
+    player.shape("square")
+    player.color("white")
+    player.speed(0)
+    
+
+def left():
+    global player
+    player.setheading(player.heading() + 5)
+
+def right():
+    global player
+    player.setheading(player.heading() - 5)
 #Setup
 screen = Screen()
 screen.bgcolor("white")
 screen.setup(500,500)
+#Key Bindings
+screen.listen()
+screen.onkeypress(create_player, "space")
+screen.onkeypress(up, "Up")
+screen.onkeypress(down, "Down")
+screen.onkeypress(left, "Left")
+screen.onkeypress(right, "Right")
+
+player = None
+
 shape = Turtle()
 shape.shape("circle")
 shape.color(generate_color())
 shape.speed(10)
+shape.seth(random.randint(0,360))
 turtles = [shape]
 
 playing_area()
 
 while True:
+    if player != None:
+        player.forward(5)
     for obj in turtles:
         turtles = move_forward(obj, turtles)
-    print(turtles)
+        if player != None and player.distance(obj) < 20:
+            obj.hideturtle()
+            turtles.remove(obj)
 
 screen.exitonclick()
